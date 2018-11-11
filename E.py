@@ -1,6 +1,10 @@
 def isSubsetSum(set, n, mul, k):
+    for i in range(100):
+        subset = ([[None for i in range(mul + 1)]
+                   for i in range(n + 2)])
+
     subset = ([[None for i in range(mul + 1)]
-               for i in range(n + 2)])
+              for i in range(n + 2)])
     # If sum is not 0 and set is empty,
     # then answer is false
     for i in range(mul + 1):
@@ -39,6 +43,8 @@ def isSubsetSum(set, n, mul, k):
                 result = checkSolution(set, subset[i][j], mul, k)
                 if result:
                     return result
+
+
 
     # uncomment this code to print table
     # for i in range(n+1):
@@ -94,6 +100,11 @@ for idx, el in enumerate(arr):
         new_arr.append(element)
     else:
         new_arr.append(element)
+
+all_multiplies = set()
+for i in range(len(new_arr)):
+    for j in range(i, len(new_arr)):
+        all_multiplies.add(new_arr[i] * new_arr[j])
 
 n = len(new_arr)
 
