@@ -1,4 +1,33 @@
-def isSubsetSum(set, n, mul, k):
+def primfacs(n):
+    i = 2
+    primfac = []
+
+    while i * i <= n:
+       while n % i == 0:
+           primfac.append(i)
+           primfac.append(n)
+           n = n / i
+       i = i + 1
+    if n > 1:
+        primfac.append(int(n))
+
+    arr = sorted(primfac)
+    previous = arr[0]
+
+    new_arr = []
+    new_arr.append(arr[0])
+
+    for i in range(1, len(arr)):
+        if arr[i] == previous:
+            continue
+    else:
+        new_arr.append(arr[i])
+        previous = arr[i]
+
+    return new_arr
+
+
+def isSubsetSum(set, n, mul, k, prim_arr):
 
     subset = ([[None for i in range(mul + 1)]
               for i in range(n + 2)])
@@ -132,7 +161,8 @@ elif k == 1:
             print(i + 1)
             break
 else:
-    res = isSubsetSum(new_arr, n, m, k)
+    prim_arr = primfacs(m)
+    res = isSubsetSum(new_arr, n, m, k, prim_arr)
     for idx in res:
         print(idx + 1, end=" ")
 
