@@ -12,45 +12,18 @@ def delete_dubl(arr):
     return new_arr
 
 
-def primfacs(n):
-    i = 2
-    primfac = []
-    primfac.append(int(n))
-
-    while i * i <= n:
-        while n % i == 0:
-            primfac.append(i)
-            # primfac.append(int(n))
-            n = n / i
-        i = i + 1
-    if n > 1:
-        primfac.append(int(n))
-
-    return primfac
-
-
 def isSubsetSum(set, n, mul, k, prim_arr):
 
     subset = ([[None for i in range(len(prim_arr) + 2)]
               for i in range(n + 2)])
-    # If sum is not 0 and set is empty,
-    # then answer is false
-    # subset[0][0] = None
-    # subset[0][1] = None
+
     j = 0
     indexes = {}
     for i in range(2, len(prim_arr) + 2):
         indexes[prim_arr[j]] = i
         subset[0][i] = prim_arr[j]
-        # subset[1][i] = None
         j += 1
 
-    # # If sum is 0, then answer is true
-    # for i in range(n + 1):
-    #     subset[i][0] = None
-    #     subset[i][1] = None
-
-    # Fill the subset table in botton up manner
     for i in range(2, n + 2):
         for j in range(2, len(prim_arr) + 2):
             new_j = subset[0][j]
@@ -112,7 +85,6 @@ def checkSolution(set, arr, mul, k):
         return new_arr
     else:
         return None
-    # print(last_column_arr)
 
 
 def checkSolution2(set, arr, mul, k):
@@ -132,7 +104,6 @@ def checkSolution2(set, arr, mul, k):
         return new_arr
     elif k < len(new_arr):
         return new_arr.extend([ones[i] for i in range(k - len(new_arr))])
-    # print(last_column_arr)
 
 
 m_n_k = input()
@@ -195,7 +166,6 @@ elif n == k:
 elif n == 1:
     print(1, end=" ")
 else:
-    # prim_arr = primfacs(m)
     prim_arr = [m]
     prim_arr.extend(new_arr)
     prim_arr = sorted(prim_arr)
