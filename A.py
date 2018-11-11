@@ -1,22 +1,29 @@
 class Vertex:
     def __init__(self, node):
-        self.id = node
-        self.adjacent = {}
+        self._id = node
+        self._adjacent = {}
 
     def __str__(self):
-        return str(self.id) + ' adjacent: ' + str([x.id for x in self.adjacent])
+        return str(self.id)
 
-    def add_neighbor(self, neighbor, weight=1):
-        if neighbor not in self.adjacent:
-            self.adjacent[neighbor] = weight
+    def add_neighbor(self, neighbor, weight=1) -> bool:
+        if neighbor not in self._adjacent:
+            self._adjacent[neighbor] = weight
+            return True
         else:
-            self.adjacent[neighbor] += 1
+            self._adjacent[neighbor] += 1
+            return False
 
     def get_connections(self):
-        return self.adjacent.keys()
+        return self._adjacent.keys()
 
-    def get_id(self):
-        return self.id
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def adjacent(self):
+        return self._adjacent
 
     def get_weight(self, neighbor):
         return self.adjacent[neighbor]
@@ -24,42 +31,51 @@ class Vertex:
 
 class Graph:
     def __init__(self):
-        self.vert_dict = {}
-        self.num_vertices = 0
+        self._vert_dict = {}
+        self._amount_of_edges = 0
+        self._num_vertices = 0
 
     def __iter__(self):
-        return iter(self.vert_dict.values())
+        return iter(self._vert_dict.values())
 
     def add_vertex(self, node):
-        if node not in self.vert_dict:
-            self.num_vertices = self.num_vertices + 1
+        if node not in self._vert_dict:
+            self._num_vertices = self._num_vertices + 1
             new_vertex = Vertex(node)
-            self.vert_dict[node] = new_vertex
+            self._vert_dict[node] = new_vertex
             return new_vertex
         else:
-            return self.vert_dict[node]
+            return self._vert_dict[node]
 
     def get_vertex(self, n):
-        if n in self.vert_dict:
-            return self.vert_dict[n]
+        if n in self._vert_dict:
+            return self._vert_dict[n]
         else:
             return None
 
     def add_edge(self, frm, to, cost=1):
-        if frm not in self.vert_dict:
+        if frm not in self._vert_dict:
             self.add_vertex(frm)
-        if to not in self.vert_dict:
+        if to not in self._vert_dict:
             self.add_vertex(to)
 
-        self.vert_dict[frm].add_neighbor(self.vert_dict[to], cost)
+        new_edge = self._vert_dict[frm].add_neighbor(self._vert_dict[to], cost)
+        if new_edge:
+            self._amount_of_edges += 1
+
         # self.vert_dict[to].add_neighbor(self.vert_dict[frm], cost)
 
-    def get_vertices(self):
-        return self.vert_dict.keys()
+    @property
+    def vert_dict(self):
+        return self._vert_dict
 
-    def vertices_amount(self):
-        return self.num_vertices
+    @property
+    def num_vertices(self):
+        return self._num_vertices
 
+    @property
+    def amount_of_edges(self):
+        return self._amount_of_edges
 
 
 T = int(input())
@@ -79,4 +95,10 @@ for _ in range(T):
         previous = word
 
 
-print(g.vertices_amount())
+print(g.num_vertices)
+print(g.amount_of_edges)
+vert_dict = g.vert_dict
+for vertex in vert_dict.values():
+    adjacent = vertex.adjacent
+    for key, value in adjacent.items():
+        print(str(vertex.id) + " " + str(key) + " " + str(value))
