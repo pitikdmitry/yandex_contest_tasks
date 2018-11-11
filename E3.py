@@ -35,25 +35,30 @@ def combinationUtil(arr, data, start, end, index, r, m):
 
     i = start
     while (i <= end and end - i + 1 >= r - index):
-        data[index] = i
+        data[index] = arr[i] # tuple(value, [indexes])
         combinationUtil(arr, data, i + 1, end, index + 1, r, m)
-
-        while i + 1 < len(arr) and arr[i] == arr[i + 1]:
-            i += 1
-
         i += 1
 
 
 m_n_k = input()
-m_n_k =  m_n_k.split()
+m_n_k = m_n_k.split()
 n = int(m_n_k[0])
 m = int(m_n_k[1]) # multi
 k = int(m_n_k[2]) # k elements
 arr = input()
 arr = arr.split()
+
+counter = {}
 new_arr = []
-for el in arr:
-    new_arr.append(int(el))
+for idx, el in enumerate(arr):
+    element = int(el)
+    if element not in counter:
+        counter[element] = [idx]
+    else:
+        counter[element].append(idx)
+
+for key, value in counter.items():
+    new_arr.append((key, value))
 
 
 n = len(new_arr)

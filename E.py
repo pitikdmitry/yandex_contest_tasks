@@ -1,7 +1,4 @@
 def isSubsetSum(set, n, mul, k):
-    for i in range(100):
-        subset = ([[None for i in range(mul + 1)]
-                   for i in range(n + 2)])
 
     subset = ([[None for i in range(mul + 1)]
               for i in range(n + 2)])
