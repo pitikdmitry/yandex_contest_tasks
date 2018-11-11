@@ -60,7 +60,7 @@ def isSubsetSum(set, n, mul, k, prim_arr):
                 subset[i][j] = [i - 2]
             elif new_j > set[i - 2]:
                 if set[i - 2] == 0:
-                    subset[i][j] = subset[i - 1][j]
+                    subset[i][j] = subset[i - 1][j] # or None
                 else:
                     j_index = new_j / set[i - 2]
                     if j_index.is_integer():
@@ -71,7 +71,8 @@ def isSubsetSum(set, n, mul, k, prim_arr):
                         #
                         if j_index is None:
                             subset[i][j] = subset[i - 1][j]
-                        elif subset[i - 1][j_index] is not None and len(subset[i - 1][j_index]) > 0:
+                        elif subset[i - 1][j_index] is not None:
+                        # elif subset[i - 1][j_index] is not None and len(subset[i - 1][j_index]) > 0:
                             new_arr = subset[i - 1][j_index].copy()
                             new_arr.append(i - 2)
                             subset[i][j] = new_arr
@@ -194,7 +195,8 @@ elif n == k:
 elif n == 1:
     print(1, end=" ")
 else:
-    prim_arr = primfacs(m)
+    # prim_arr = primfacs(m)
+    prim_arr = [m]
     prim_arr.extend(new_arr)
     prim_arr = sorted(prim_arr)
     prim_arr = delete_dubl(prim_arr)
