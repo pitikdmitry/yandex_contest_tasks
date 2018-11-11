@@ -18,30 +18,27 @@ def find_coded_len(s, l, r):
         else:
             number = int(number)
 
-        if j <= l <= j + number:
-            if j + number <= r:
-                if j + number - l == 0:
-                    counter += 1
-                elif j + number - l > 0:
-                    counter += 1 + len(str(j + number - l))
-            else:
-                if l - r == 0:
-                    counter += 1
-                elif l - r > 0:
-                    counter += 1 + len(str(l - r))
+        value = 0
+        if l <= j <= r and j + number - 1 <= r:
+            value = number
+        elif l <= j <= r and j + number - 1 > r:
+            value = r - j + 1
+        elif j < l and l <= j + number - 1 <= r:
+            value = j + number - 1 - l + 1
+        elif j < l and j + number - 1 > r:
+            value = r - l + 1
+        elif j < l and j + number - 1 < l:
+            j += number
+            continue
+        elif j > l and j + number - 1 > l:
+            return counter
         else:
-            if j + number <= r:
-                if number == 1:
-                    counter += 1
-                elif number > 1:
-                    counter += 1 + len(str(number))
-            elif j + number > r and j > r:
-                if r - j == 1:
-                    counter += 1
-                elif r - j > 1:
-                    counter += 1 + len(str(r - j))
-            else:
-                break
+            print("wrong diapason")
+
+        if value == 1:
+            counter += 1
+        elif value > 1:
+            counter += 1 + len(str(value))
 
         j += number
 
