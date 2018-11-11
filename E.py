@@ -14,15 +14,15 @@ def delete_dubl(arr):
 
 def isSubsetSum(set, n, mul, k, prim_arr):
 
-    subset = ([[None for i in range(len(prim_arr) + 2)]
-              for i in range(n + 2)])
+    subset = ([[None for _ in range(len(prim_arr) + 2)]
+              for _ in range(n + 2)])
 
-    j = 0
+    f = 0
     indexes = {}
-    for i in range(2, len(prim_arr) + 2):
-        indexes[prim_arr[j]] = i
-        subset[0][i] = prim_arr[j]
-        j += 1
+    for g in range(2, len(prim_arr) + 2):
+        indexes[prim_arr[f]] = g
+        subset[0][g] = prim_arr[f]
+        f += 1
 
     for i in range(2, n + 2):
         for j in range(2, len(prim_arr) + 2):
@@ -30,7 +30,9 @@ def isSubsetSum(set, n, mul, k, prim_arr):
             if new_j < set[i - 2]:
                 subset[i][j] = subset[i - 1][j]
             elif new_j == set[i - 2]:
-                subset[i][j] = [i - 2]
+                value = i - 2
+                array = [value]
+                subset[i][j] = array
             elif new_j > set[i - 2]:
                 if set[i - 2] == 0:
                     subset[i][j] = subset[i - 1][j] # or None
@@ -45,10 +47,9 @@ def isSubsetSum(set, n, mul, k, prim_arr):
                         if j_index is None:
                             subset[i][j] = subset[i - 1][j]
                         elif subset[i - 1][j_index] is not None:
-                        # elif subset[i - 1][j_index] is not None and len(subset[i - 1][j_index]) > 0:
-                            new_arr = subset[i - 1][j_index].copy()
-                            new_arr.append(i - 2)
-                            subset[i][j] = new_arr
+                            temp_arr = subset[i - 1][j_index].copy()
+                            temp_arr.append(i - 2)
+                            subset[i][j] = temp_arr
                         else:
                             subset[i][j] = subset[i - 1][j]
                     else:
@@ -124,8 +125,6 @@ for idx, el in enumerate(arr):
         new_arr.append(element)
     else:
         new_arr.append(element)
-
-n = len(new_arr)
 
 if m == 0:
     counter = 0
