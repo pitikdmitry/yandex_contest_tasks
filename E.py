@@ -19,23 +19,19 @@ def get_array(s):
     return arr
 
 
-def get_digits(arr, m):
-    new_s = set()
+def get_digits(arr, result, m):
+    new_s = []
     for i in range(len(arr)):
         for j in range(i + 1, len(arr)):
             new_val = arr[i] * arr[j]
-            if new_val <= m:
-                new_s.add(new_val)
+            if new_val < m:
+                new_s.append(new_val)
 
-    if len(new_s) > 0:
-        for val in arr:
-            if val not in new_s:
-                new_s.add(val)
-
-        new_arr = get_array(new_s)
-        return get_digits(new_arr, m)
-    else:
-        return arr
+    # if len(new_s) > 0:
+    #     result.extend(new_s)
+    #     return get_digits(new_s, result, m)
+    # else:
+        return result
 
 
 def delete_dubl(arr):
@@ -57,37 +53,35 @@ def isSubsetSum(set, n, mul, k, prim_arr):
     subset = ([[None for _ in range(len(prim_arr) + 2)]
               for _ in range(n + 2)])
 
-    f = 0
     indexes = {}
     for g in range(2, len(prim_arr) + 2):
-        indexes[prim_arr[f]] = g
-        subset[0][g] = prim_arr[f]
-        f += 1
+        element = prim_arr[g - 2]
+        subset[0][g] = element
+        indexes[element] = g
 
     for i in range(2, n + 2):
         for j in range(2, len(prim_arr) + 2):
-            new_j = subset[0][j]
-            if new_j < set[i - 2]:
+            new_mul = subset[0][j] # то произведение которые мы хотим высчимтать
+            if new_mul < set[i - 2]:
                 subset[i][j] = subset[i - 1][j]
-            elif new_j == set[i - 2]:
+            elif new_mul == set[i - 2]: # можем ли получить new_mul текущим эелементом из set
                 value = i - 2
                 array = [value]
                 subset[i][j] = array
-            elif new_j > set[i - 2]:
+            elif new_mul > set[i - 2]:
                 if set[i - 2] == 0:
                     subset[i][j] = subset[i - 1][j] # or None
                 else:
-                    j_index = new_j / set[i - 2]
-                    if j_index.is_integer():
-                        j_index = int(j_index)
+                    needed_element = new_mul / set[i - 2] # нам нужен этот элемент он результат от деления
+                    if needed_element.is_integer():
+                        needed_element = int(needed_element)
 
-                        j_index = indexes.get(j_index)
-                        # j_index = indexes[j_index]
-                        #
-                        if j_index is None:
+                        index = indexes.get(needed_element)
+
+                        if index is None:
                             subset[i][j] = subset[i - 1][j]
-                        elif subset[i - 1][j_index] is not None:
-                            temp_arr = subset[i - 1][j_index].copy()
+                        elif subset[i - 1][index] is not None:
+                            temp_arr = subset[i - 1][index].copy()
                             temp_arr.append(i - 2)
                             subset[i][j] = temp_arr
                         else:
@@ -100,11 +94,11 @@ def isSubsetSum(set, n, mul, k, prim_arr):
                 if result:
                     return result
 
-    for i in range(2, n + 2):
-        last = subset[i][len(subset[i]) - 1]
-        result = checkSolution2(set, last, mul, k)
-        if result:
-            return result
+    # for i in range(2, n + 2):
+    #     last = subset[i][len(subset[i]) - 1]
+    #     result = checkSolution2(set, last, mul, k)
+    #     if result:
+    #         return result
     return [0, 0, 0, 0]
 
 
@@ -200,17 +194,23 @@ elif k == 1:
         if new_arr[i] == m:
             print(i + 1, end=" ")
             break
-# elif n == k:
-#     for i in range(len(new_arr)):
-#         print(i + 1, end=" ")
+elif n == k:
+    for i in range(len(new_arr)):
+        print(i + 1, end=" ")
 elif n == 1:
     print(1, end=" ")
 else:
     # prim_arr = [m]
-    new_arr = delete_dubl(new_arr)
-    res_prim = get_digits(new_arr, m)
-    # prim_arr.extend(new_arr)
-    prim_arr = sorted(res_prim)
-    res = isSubsetSum(new_arr, n, m, k, prim_arr)
+    # new_arr = delete_dubl(new_arr)
+    # new_arr = sorted(new_arr)
+    result = []
+    res_prim = get_digits(new_arr, result, m)
+    res_prim.append(m)
+    res_prim = new_arr + res_prim
+    res_prim = sorted(res_prim)
+    res_prim = delete_dubl(res_prim)
+
+    res = isSubsetSum(new_arr, n, m, k, res_prim)
     for idx in res:
         print(idx + 1, end=" ")
+# Print()
