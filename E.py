@@ -1,3 +1,43 @@
+# def get_digits(arr, result, delte):
+#     #needed sorted array
+#     #set
+#     new_delte = []
+#     for de in delte:
+#         for val in arr:
+#             new_val = de / val
+#             if new_val.is_integer():
+#                 if new_val not in new_delte:
+#                     new_delte.append(new_val)
+#     if len(new_delte) == 0:
+#         return result
+#     else:
+#         return get_digits(arr, result, new_delte)
+def get_array(s):
+    arr= []
+    for val in s:
+        arr.append(val)
+    return arr
+
+
+def get_digits(arr, m):
+    new_s = set()
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            new_val = arr[i] * arr[j]
+            if new_val <= m:
+                new_s.add(new_val)
+
+    if len(new_s) > 0:
+        for val in arr:
+            if val not in new_s:
+                new_s.add(val)
+
+        new_arr = get_array(new_s)
+        return get_digits(new_arr, m)
+    else:
+        return arr
+
+
 def delete_dubl(arr):
     new_arr = []
     new_arr.append(arr[0])
@@ -65,6 +105,7 @@ def isSubsetSum(set, n, mul, k, prim_arr):
         result = checkSolution2(set, last, mul, k)
         if result:
             return result
+    return [0, 0, 0, 0]
 
 
 def checkSolution(set, arr, mul, k):
@@ -159,16 +200,17 @@ elif k == 1:
         if new_arr[i] == m:
             print(i + 1, end=" ")
             break
-elif n == k:
-    for i in range(len(new_arr)):
-        print(i + 1, end=" ")
+# elif n == k:
+#     for i in range(len(new_arr)):
+#         print(i + 1, end=" ")
 elif n == 1:
     print(1, end=" ")
 else:
-    prim_arr = [m]
-    prim_arr.extend(new_arr)
-    prim_arr = sorted(prim_arr)
-    prim_arr = delete_dubl(prim_arr)
+    # prim_arr = [m]
+    new_arr = delete_dubl(new_arr)
+    res_prim = get_digits(new_arr, m)
+    # prim_arr.extend(new_arr)
+    prim_arr = sorted(res_prim)
     res = isSubsetSum(new_arr, n, m, k, prim_arr)
     for idx in res:
         print(idx + 1, end=" ")
