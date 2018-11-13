@@ -1,132 +1,120 @@
 from math import pi, sqrt, asin, sin, acos
 
 
-def check_direction_up_down(A_x_l, A_x_r, A_y, R, x_c, y_c):
-    x_r_cross = x_c + sqrt(R ** 2 - (A_y - y_c) ** 2)
-    x_l_cross = x_c - sqrt(R ** 2 - (A_y - y_c) ** 2)
-    h_triangle = abs(A_y - y_c)
+def check_dir_u_d(left_line, right_line, y_line, r, c_x, c_y):
+    x_r_cross = c_x + sqrt(r ** 2 - (y_line - c_y) ** 2)
+    x_l_cross = c_x - sqrt(r ** 2 - (y_line - c_y) ** 2)
+    h_triangle = abs(y_line - c_y)
 
-    s_piece = 0
-    if x_l_cross >= A_x_l and x_r_cross <= A_x_r:  # without pieces
+    s_sector = 0
+    if x_l_cross >= left_line and x_r_cross <= right_line:  # without pieces
         hord = x_r_cross - x_l_cross
-        alpha = 2 * asin(hord / (2 * R))
-        s_piece = R ** 2 * (alpha - sin(alpha)) / 2
-    elif x_l_cross < A_x_l and x_r_cross <= A_x_r and x_r_cross > A_x_l:  # with left piece, delete small part of piece
-        osn_triangle = abs(x_r_cross - A_x_l)
+        alpha = 2 * asin(hord / (2 * r))
+        s_sector = r ** 2 * (alpha - sin(alpha)) / 2
+    elif x_l_cross < left_line < x_r_cross <= right_line:  # with left piece, delete small part of piece
+        osn_triangle = abs(x_r_cross - left_line)
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_left_corner = sqrt((x_c - A_x_l) ** 2 + (y_c - A_y) ** 2)
-        alpha = acos((from_c_to_left_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_left_corner * R))
-        s_piece = ((R ** 2) * alpha / 2) - s_triangle
-    elif x_l_cross >= A_x_l and x_l_cross < A_x_r and x_r_cross > A_x_r:
-        osn_triangle = abs(A_x_r - x_l_cross)
+        from_c_to_left_corner = sqrt((c_x - left_line) ** 2 + (c_y - y_line) ** 2)
+        alpha = acos((from_c_to_left_corner ** 2 + r ** 2 - osn_triangle ** 2) / (2 * from_c_to_left_corner * r))
+        s_sector = ((r ** 2) * alpha / 2) - s_triangle
+    elif left_line <= x_l_cross < right_line < x_r_cross:
+        osn_triangle = abs(right_line - x_l_cross)
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_right_corner = sqrt((x_c - A_x_r) ** 2 + (y_c - A_y) ** 2)
-        alpha = acos((from_c_to_right_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_right_corner * R))
-        s_piece = (R ** 2 * alpha / 2) - s_triangle
-    elif x_l_cross < A_x_l and x_r_cross > A_x_r:
-        osn_triangle = A_x_r - A_x_l
+        from_c_to_right_corner = sqrt((c_x - right_line) ** 2 + (c_y - y_line) ** 2)
+        alpha = acos((from_c_to_right_corner ** 2 + r ** 2 - osn_triangle ** 2) / (2 * from_c_to_right_corner * r))
+        s_sector = (r ** 2 * alpha / 2) - s_triangle
+    elif x_l_cross < left_line and x_r_cross > right_line:
+        osn_triangle = right_line - left_line
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_left_corner = sqrt((x_c - A_x_l) ** 2 + (y_c - A_y) ** 2)
-        from_c_to_right_corner = sqrt((x_c - A_x_r) ** 2 + (y_c - A_y) ** 2)
-        alpha = acos((from_c_to_right_corner ** 2 + from_c_to_left_corner ** 2 - osn_triangle ** 2) / (2 * from_c_to_right_corner * from_c_to_left_corner))
-        s_piece = (R ** 2 * alpha / 2) - s_triangle
-    else:
-        print("smth wrong")
-    return s_piece
+        from_c_to_left_corner = sqrt((c_x - left_line) ** 2 + (c_y - y_line) ** 2)
+        from_c_to_right_corner = sqrt((c_x - right_line) ** 2 + (c_y - y_line) ** 2)
+        alpha = acos((from_c_to_right_corner ** 2 + from_c_to_left_corner ** 2 - osn_triangle ** 2)
+                     / (2 * from_c_to_right_corner * from_c_to_left_corner))
+        s_sector = (r ** 2 * alpha / 2) - s_triangle
+
+    return s_sector
 
 
-def check_direction_left_right(A_y_d, A_y_u, A_x, R, x_c, y_c):
-    y_d_cross = y_c - sqrt(R ** 2 - (A_x - x_c) ** 2)
-    y_u_cross = y_c + sqrt(R ** 2 - (A_x - x_c) ** 2)
-    h_triangle = abs(A_x - x_c)
+def check_dir_l_r(down_line, up_line, x_line, r, c_x, c_y):
+    y_d_cross = c_y - sqrt(r ** 2 - (x_line - c_x) ** 2)
+    y_u_cross = c_y + sqrt(r ** 2 - (x_line - c_x) ** 2)
+    h_triangle = abs(x_line - c_x)
 
-    s_piece = 0
-    if y_d_cross >= A_y_d and y_u_cross <= A_y_u:  # without pieces
+    s_sector = 0
+    if y_d_cross >= down_line and y_u_cross <= up_line:  # without pieces
         hord = y_u_cross - y_d_cross
-        alpha = 2 * asin(hord / (2 * R))
-        s_piece = R ** 2 * (alpha - sin(alpha)) / 2
-    elif y_d_cross < A_y_d and y_u_cross <= A_y_u and y_u_cross > A_y_d:  # with left piece, delete small part of piece
-        osn_triangle = abs(y_u_cross - A_y_d)
+        alpha = 2 * asin(hord / (2 * r))
+        s_sector = r ** 2 * (alpha - sin(alpha)) / 2
+    elif y_d_cross < down_line < y_u_cross <= up_line:  # with left piece, delete small part of piece
+        osn_triangle = abs(y_u_cross - down_line)
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_down_corner = sqrt((x_c - A_x) ** 2 + (y_c - A_y_d) ** 2)
-        alpha = acos((from_c_to_down_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_down_corner * R))
-        s_piece = ((R ** 2) * alpha / 2) - s_triangle
-    elif y_d_cross >= A_y_d and y_d_cross < A_y_u and y_u_cross > A_y_u:
-        osn_triangle = abs(A_y_u - y_d_cross)
+        from_c_to_down_corner = sqrt((c_x - x_line) ** 2 + (c_y - down_line) ** 2)
+        alpha = acos((from_c_to_down_corner ** 2 + r ** 2 - osn_triangle ** 2) / (2 * from_c_to_down_corner * r))
+        s_sector = ((r ** 2) * alpha / 2) - s_triangle
+    elif down_line <= y_d_cross < up_line < y_u_cross:
+        osn_triangle = abs(up_line - y_d_cross)
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_up_corner = sqrt((x_c - A_x) ** 2 + (y_c - A_y_u) ** 2)
-        alpha = acos((from_c_to_up_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_up_corner * R))
-        s_piece = (R ** 2 * alpha / 2) - s_triangle
-    elif y_d_cross < A_y_d and y_u_cross > A_y_u:
-        osn_triangle = A_y_u - A_y_d
+        from_c_to_up_corner = sqrt((c_x - x_line) ** 2 + (c_y - up_line) ** 2)
+        alpha = acos((from_c_to_up_corner ** 2 + r ** 2 - osn_triangle ** 2) / (2 * from_c_to_up_corner * r))
+        s_sector = (r ** 2 * alpha / 2) - s_triangle
+    elif y_d_cross < down_line and y_u_cross > up_line:
+        osn_triangle = up_line - down_line
         s_triangle = osn_triangle * h_triangle / 2
-        from_c_to_down_corner = sqrt((x_c - A_x) ** 2 + (y_c - A_y_d) ** 2)
-        from_c_to_up_corner = sqrt((x_c - A_x) ** 2 + (y_c - A_y_u) ** 2)
-        alpha = acos((from_c_to_up_corner ** 2 + from_c_to_down_corner ** 2 - osn_triangle ** 2) / (2 * from_c_to_up_corner * from_c_to_down_corner))
-        s_piece = (R ** 2 * alpha / 2) - s_triangle
-    else:
-        print("smth wrong")
-    return s_piece
+        from_c_to_down_corner = sqrt((c_x - x_line) ** 2 + (c_y - down_line) ** 2)
+        from_c_to_up_corner = sqrt((c_x - x_line) ** 2 + (c_y - up_line) ** 2)
+        alpha = acos((from_c_to_up_corner ** 2 + from_c_to_down_corner ** 2 - osn_triangle ** 2)
+                     / (2 * from_c_to_up_corner * from_c_to_down_corner))
+        s_sector = (r ** 2 * alpha / 2) - s_triangle
+
+    return s_sector
 
 
-def checkDot(x_c, y_c, R):
-    s = pi * R ** 2
+def cut_sector(c_x, c_y, r):
+    s = pi * r ** 2
 
-    #up
-    a_x = x_c
-    a_y = y_c + R
-    A_y = 1000
-    A_x_l = 0
-    A_x_r = 1000
+    a_x = c_x
+    a_y = c_y + r
+    left_line = 0
+    right_line = 1
+    y_line = 1
 
-    if a_y > A_y:
-        s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
-        s -= s_piece
+    if a_y > y_line:
+        s -= check_dir_u_d(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
 
-    #down
-    a_x = x_c
-    a_y = y_c - R
-    A_y = 0
-    A_x_l = 0
-    A_x_r = 1000
+    a_y = c_y - r
+    y_line = 0
 
-    if a_y < A_y:
-        s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
-        s -= s_piece
+    if a_y < y_line:
+        s -= check_dir_u_d(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
 
     #left
-    a_x = x_c - R
-    a_y = y_c
-    A_y_d = 0
-    A_y_u = 1000
+    a_x = c_x - r
+    up_line = 1
+    a_y = c_y
+    down_line = 0
     A_x = 0
 
     if a_x < A_x:
-        s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
-        s-= s_piece
+        s -= check_dir_l_r(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
 
     #right
-    a_x = x_c + R
-    a_y = y_c
-    A_y_d = 0
-    A_y_u = 1000
-    A_x = 1000
+    a_x = c_x + r
+    A_x = 1
 
     if a_x > A_x:
-        s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
-        s -= s_piece
+        s -= check_dir_l_r(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
 
     return s
 
 
-N, R = map(float, input().split())
-N = int(N)
-R *= 1000
-S_cube = 1000 * 1000
-S_summ = 0
-for _ in range(N):
-    x, y = map(lambda x: float(x) * 1000, input().split())
-    s = checkDot(x, y, R)
-    S_summ += s
+n, r = input().split()
+r = float(r)
+n = int(n)
 
-print(S_summ / S_cube)
+all_s = 1
+s = 0
+for i in range(n):
+    x, y = map(float, input().split())
+    s += cut_sector(x, y, r)
+
+print(s / all_s)

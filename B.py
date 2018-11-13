@@ -14,7 +14,7 @@ def compare_template(tem_1: str, tem_2: str):
             num_2 = int(c_2)
             if num_1 > num_2:
                 return True
-            elif num_2 > num_1:
+            elif num_1 < num_2:
                 return False
             else:
                 i += 1
@@ -30,7 +30,7 @@ def compare_template(tem_1: str, tem_2: str):
             elif c_2 == "X":
                 return False
             else:
-                print("SOMETHING WENT WRONG")
+                return False
 
 
 class Node:
@@ -112,10 +112,10 @@ def parse_number(number: str) -> str:
 def parse_template(old_template: str) -> tuple:
     new_template = ""
     for c in old_template:
-        if c == "-":
-            break
+        # if c == "-":
+        #     break
 
-        if c.isdigit() or c == "X":
+        if c.isdigit() or c == "X" or c =="x":
             new_template += c
 
     return old_template, new_template

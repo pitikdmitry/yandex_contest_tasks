@@ -1,5 +1,5 @@
 import unittest
-from F import check_direction_up_down, check_direction_left_right
+from F import check_dir_u_d, check_dir_l_r
 
 
 class TestF(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y > A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_up_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.4567393972175116, places=9)
@@ -29,7 +29,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y > A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_up_left: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -44,7 +44,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y > A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_up_right: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -59,7 +59,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y < A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_down_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.4567393972175116, places=9)
@@ -74,7 +74,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y < A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_down_left: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -89,7 +89,7 @@ class TestF(unittest.TestCase):
         A_x_r = 10
 
         if a_y < A_y:
-            s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_u_d(left_line=A_x_l, right_line=A_x_r, y_line=A_y, r=R, c_x=x_c, c_y=y_c)
             print("test_down_right: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -104,7 +104,7 @@ class TestF(unittest.TestCase):
         A_x = 0
 
         if a_x < A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.4567393972175116, places=9)
@@ -119,7 +119,7 @@ class TestF(unittest.TestCase):
         A_x = 0
 
         if a_x < A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -134,7 +134,7 @@ class TestF(unittest.TestCase):
         A_x = 0
 
         if a_x < A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -149,7 +149,7 @@ class TestF(unittest.TestCase):
         A_x = 10
 
         if a_x > A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.4567393972175116, places=9)
@@ -164,7 +164,7 @@ class TestF(unittest.TestCase):
         A_x = 10
 
         if a_x > A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
@@ -179,7 +179,7 @@ class TestF(unittest.TestCase):
         A_x = 10
 
         if a_x > A_x:
-            s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+            s_piece = check_dir_l_r(down_line=A_y_d, up_line=A_y_u, x_line=A_x, r=R, c_x=x_c, c_y=y_c)
             print("test_left_middle: ", end=" ")
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)

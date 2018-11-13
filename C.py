@@ -3,14 +3,11 @@ def find_coded_len(s, l, r):
 
     while i < len(s):
         number = ""
-        if i < len(s):
-            while s[i].isdigit():
-                if i == len(s):
-                    break
-                number += s[i]
-                i += 1
+        while i < len(s) and s[i].isdigit():
+            number += s[i]
+            i += 1
 
-        letter = s[i]
+        # letter = s[i]
         i += 1
 
         if number == "":
@@ -32,8 +29,6 @@ def find_coded_len(s, l, r):
             continue
         elif j > l and j + number - 1 > l:
             return counter
-        else:
-            print("wrong diapason")
 
         if value == 1:
             counter += 1
@@ -47,6 +42,7 @@ def find_coded_len(s, l, r):
 
 s = input()
 q = int(input())
+
 for i in range(q):
     l, r = map(int, input().split())
     print(find_coded_len(s, l - 1, r - 1))
