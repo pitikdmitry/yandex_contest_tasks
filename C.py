@@ -2,9 +2,6 @@ def find_coded_len(s, l, r):
     i, j, counter = 0, 0, 0
 
     while i < len(s):
-        letter = s[i]
-        i += 1
-
         number = ""
         if i < len(s):
             while s[i].isdigit():
@@ -12,6 +9,9 @@ def find_coded_len(s, l, r):
                     break
                 number += s[i]
                 i += 1
+
+        letter = s[i]
+        i += 1
 
         if number == "":
             number = 1
