@@ -72,65 +72,61 @@ def check_direction_left_right(A_y_d, A_y_u, A_x, R, x_c, y_c):
 def checkDot(x_c, y_c, R):
     s = pi * R ** 2
 
-    #high
+    #up
     a_x = x_c
     a_y = y_c + R
-    A_y = 1
+    A_y = 1000
     A_x_l = 0
-    A_x_r = 1
+    A_x_r = 1000
 
     if a_y > A_y:
         s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
         s -= s_piece
 
-    # left
-    b_x = abs(R - x_c)
-    b_y = y_c
+    #down
+    a_x = x_c
+    a_y = y_c - R
+    A_y = 0
+    A_x_l = 0
+    A_x_r = 1000
 
-    B_x_l = 0
-    B_x_r = 0
-    B_x = B_x_l
-
-    B_y_l = 0
-    B_y_r = 1
-
-    if b_x < B_x:
-        x_c, y_c = y_c, x_c
-        B_x_l, B_y_l = B_y_l, B_x_l
-        B_x_r, B_y_r = B_y_r, B_x_r
-        s_piece = check_direction_up_down(A_x_l=B_x_l, A_x_r=B_x_r, A_y=B_y_l, R=R, x_c=x_c, y_c=y_c)
+    if a_y < A_y:
+        s_piece = check_direction_up_down(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
         s -= s_piece
 
-    # #down
-    # b_x = x_c
-    # b_y = abs(R - y_c)
-    # B_y = 0
-    # B_x_l = 0
-    # B_x_r = 1
-    # if b_y < B_y:
-    #     s_piece = check_direction(B_x_l, B_x_r, B_y, R, x_c, y_c)
-    #     s -= s_piece
-    #
-    #
-    #
-    # # right
-    # b_x = x_c + R
-    # b_y = y_c
-    # B_y = 1
-    # B_x_l = 0
-    # B_x_r = 1
-    # if b_y < B_y:
-    #     s_piece = check_direction(B_x_l, B_x_r, B_y, R, x_c, y_c)
-    #     s -= s_piece
+    #left
+    a_x = x_c - R
+    a_y = y_c
+    A_y_d = 0
+    A_y_u = 1000
+    A_x = 0
+
+    if a_x < A_x:
+        s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+        s-= s_piece
+
+    #right
+    a_x = x_c + R
+    a_y = y_c
+    A_y_d = 0
+    A_y_u = 1000
+    A_x = 1000
+
+    if a_x > A_x:
+        s_piece = check_direction_left_right(A_y_d=A_y_d, A_y_u=A_y_u, A_x=A_x, R=R, x_c=x_c, y_c=y_c)
+        s -= s_piece
+
+    return s
 
 
-# N, R = map(int, input().split())
-# chips = []
-# S = 0
-# for _ in range(N):
-#     x, y = map(int, input().split())
-#     chips.append((x, y))
-#     s = checkDot(x, y, R)
-#     S += s
+N, R = map(float, input().split())
+N = int(N)
+R *= 1000
+S_cube = 1000 * 1000
+S_summ = 0
+for _ in range(N):
+    x, y = map(lambda x: float(x) * 1000, input().split())
+    s = checkDot(x, y, R)
+    S_summ += s
 
-
+print(S_summ / S_cube)
