@@ -1,7 +1,7 @@
 from itertools import permutations
 from functools import reduce
 
-arr = "13555"
+arr = "12535"
 counter = 0
 all = 0
 for i in range(len(arr)):
