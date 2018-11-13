@@ -6,11 +6,6 @@ def check_direction(A_x_l, A_x_r, A_y, R, x_c, y_c):
     x_l_cross = x_c - sqrt(R ** 2 - (A_y - y_c) ** 2)
     h_triangle = abs(A_y - y_c)
 
-    # if change_direction:
-    #     y_r_cross = x_c + sqrt(R ** 2 - (A_y - y_c) ** 2)
-    #     y_l_cross = x_c - sqrt(R ** 2 - (A_y - y_c) ** 2)
-    #     h_triangle = abs(A_y - x_c)
-
     s_piece = 0
     if x_l_cross >= A_x_l and x_r_cross <= A_x_r:  # without pieces
         hord = x_r_cross - x_l_cross
