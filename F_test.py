@@ -15,6 +15,7 @@ class TestF(unittest.TestCase):
 
         if a_y > A_y:
             s_piece = check_direction(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            print("test_up_middle: ", end=" ")
             print(s_piece)
 
     def test_up_left(self):
@@ -28,7 +29,24 @@ class TestF(unittest.TestCase):
 
         if a_y > A_y:
             s_piece = check_direction(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            print("test_up_left: ", end=" ")
             print(s_piece)
+
+    def test_up_right(self):
+        x_c, y_c, R = 9, 9, 2
+
+        a_x = x_c
+        a_y = y_c + R
+        A_y = 10
+        A_x_l = 0
+        A_x_r = 10
+
+        if a_y > A_y:
+            s_piece = check_direction(A_x_l=A_x_l, A_x_r=A_x_r, A_y=A_y, R=R, x_c=x_c, y_c=y_c)
+            print("test_up_right: ", end=" ")
+            print(s_piece)
+            print(s_piece)
+
 
 if __name__ == '__main__':
     unittest.main()

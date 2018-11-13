@@ -1,4 +1,4 @@
-from math import pi, sqrt, asin, sin
+from math import pi, sqrt, asin, sin, acos
 
 
 def check_direction(A_x_l, A_x_r, A_y, R, x_c, y_c):
@@ -17,23 +17,23 @@ def check_direction(A_x_l, A_x_r, A_y, R, x_c, y_c):
         alpha = 2 * asin(hord / (2 * R))
         s_piece = R ** 2 * (alpha - sin(alpha)) / 2
     elif x_l_cross < A_x_l and x_r_cross <= A_x_r and x_r_cross > A_x_l:  # with left piece, delete small part of piece
-        osn_triangle = x_r_cross
+        osn_triangle = abs(x_r_cross - A_x_l)
         s_triangle = osn_triangle * h_triangle / 2
         from_c_to_left_corner = sqrt((x_c - A_x_l) ** 2 + (y_c - A_y) ** 2)
-        alpha = asin(2 * s_triangle / (from_c_to_left_corner * R))
-        s_piece = (R ** 2 * alpha / 2) - s_triangle
-    elif x_l_cross >= A_x_l and x_l_cross < A_x_r and x_l_cross > A_x_r:
-        osn_triangle = 1 - x_l_cross
+        alpha = acos((from_c_to_left_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_left_corner * R))
+        s_piece = ((R ** 2) * alpha / 2) - s_triangle
+    elif x_l_cross >= A_x_l and x_l_cross < A_x_r and x_r_cross > A_x_r:
+        osn_triangle = abs(A_x_r - x_l_cross)
         s_triangle = osn_triangle * h_triangle / 2
         from_c_to_right_corner = sqrt((x_c - A_x_r) ** 2 + (y_c - A_y) ** 2)
-        alpha = asin(2 * s_triangle / (from_c_to_right_corner * R))
+        alpha = acos((from_c_to_right_corner ** 2 + R ** 2 - osn_triangle ** 2) / (2 * from_c_to_right_corner * R))
         s_piece = (R ** 2 * alpha / 2) - s_triangle
     elif x_l_cross < A_x_l and x_r_cross > A_x_r:
         osn_triangle = 1
         s_triangle = osn_triangle * h_triangle / 2
         from_c_to_left_corner = sqrt((x_c - A_x_l) ** 2 + (y_c - A_y) ** 2)
         from_c_to_right_corner = sqrt((x_c - A_x_r) ** 2 + (y_c - A_y) ** 2)
-        alpha = asin(2 * s_triangle / (from_c_to_left_corner * from_c_to_right_corner))
+        alpha = acos((from_c_to_right_corner ** 2 + from_c_to_left_corner ** 2 - osn_triangle ** 2) / (2 * from_c_to_right_corner * from_c_to_left_corner))
         s_piece = (R ** 2 * alpha / 2) - s_triangle
     else:
         print("smth wrong")
