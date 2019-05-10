@@ -1,4 +1,12 @@
-def find_coded_len(s, l, r):
+"""
+Given string encoded in RLE (run-length) format for ex. abbcaaa -> a2bc3a.
+You will have q queries
+Every query have digits l and r, which are indices of characters of not coded string.
+You need to find length of encoded string t[l, r]
+"""
+
+
+def find_coded_len(s, l, r) -> int:
     i, j, counter = 0, 0, 0
 
     while i < len(s):
