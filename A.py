@@ -1,3 +1,14 @@
+"""
+Build graph of substrings of texts
+For every word:
+1) word S=s1s2..sn-1sn creates n-2 words of length 3: w1 = s1s2s3, w2 = s2s3s4,
+w3 = s3s4s5, wn-2 = sn-2sn-1sn
+2) if word wi is not in graph, it will create
+3) for every pair of words (wi, wi+1) add oriented edge of weight = 1, or increase the weight by 1
+"""
+from typing import Optional, Dict
+
+
 class Vertex:
     def __init__(self, node):
         self._id = node
@@ -18,14 +29,14 @@ class Vertex:
         return self._adjacent.keys()
 
     @property
-    def id(self):
+    def id(self) -> int:
         return self._id
 
     @property
-    def adjacent(self):
+    def adjacent(self) -> {}:
         return self._adjacent
 
-    def get_weight(self, neighbor):
+    def get_weight(self, neighbor) -> int:
         return self.adjacent[neighbor]
 
 
@@ -38,7 +49,7 @@ class Graph:
     def __iter__(self):
         return iter(self._vert_dict.values())
 
-    def add_vertex(self, node):
+    def add_vertex(self, node) -> Vertex:
         if node not in self._vert_dict:
             self._num_vertices = self._num_vertices + 1
             new_vertex = Vertex(node)
@@ -47,13 +58,13 @@ class Graph:
         else:
             return self._vert_dict[node]
 
-    def get_vertex(self, n):
+    def get_vertex(self, n) -> Optional[Vertex]:
         if n in self._vert_dict:
             return self._vert_dict[n]
         else:
             return None
 
-    def add_edge(self, frm, to, cost=1):
+    def add_edge(self, frm, to, cost=1) -> None:
         if frm not in self._vert_dict:
             self.add_vertex(frm)
         if to not in self._vert_dict:
@@ -66,15 +77,15 @@ class Graph:
         # self.vert_dict[to].add_neighbor(self.vert_dict[frm], cost)
 
     @property
-    def vert_dict(self):
+    def vert_dict(self) -> Dict[Vertex]:
         return self._vert_dict
 
     @property
-    def num_vertices(self):
+    def num_vertices(self) -> int:
         return self._num_vertices
 
     @property
-    def amount_of_edges(self):
+    def amount_of_edges(self) -> int:
         return self._amount_of_edges
 
 
