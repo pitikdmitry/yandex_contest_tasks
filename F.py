@@ -1,7 +1,15 @@
+"""
+Bob has square (0,0), (0,1), (1,0), (1,1).
+There are N small chips in this square with random coordinates.
+Bob chooses one random point and counts amount of chips,
+ distance to which is smaller than R
+"""
+
+
 from math import pi, sqrt, asin, sin, acos
 
 
-def check_dir_u_d(left_line, right_line, y_line, r, c_x, c_y):
+def check_dir_up_down(left_line, right_line, y_line, r, c_x, c_y):
     x_r_cross = c_x + sqrt(r ** 2 - (y_line - c_y) ** 2)
     x_l_cross = c_x - sqrt(r ** 2 - (y_line - c_y) ** 2)
     h_triangle = abs(y_line - c_y)
@@ -35,7 +43,7 @@ def check_dir_u_d(left_line, right_line, y_line, r, c_x, c_y):
     return s_sector
 
 
-def check_dir_l_r(down_line, up_line, x_line, r, c_x, c_y):
+def check_dir_left_right(down_line, up_line, x_line, r, c_x, c_y):
     y_d_cross = c_y - sqrt(r ** 2 - (x_line - c_x) ** 2)
     y_u_cross = c_y + sqrt(r ** 2 - (x_line - c_x) ** 2)
     h_triangle = abs(x_line - c_x)
@@ -79,13 +87,13 @@ def cut_sector(c_x, c_y, r):
     y_line = 1
 
     if a_y > y_line:
-        s -= check_dir_u_d(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
+        s -= check_dir_up_down(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
 
     a_y = c_y - r
     y_line = 0
 
     if a_y < y_line:
-        s -= check_dir_u_d(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
+        s -= check_dir_up_down(left_line=left_line, right_line=right_line, y_line=y_line, r=r, c_x=c_x, c_y=c_y)
 
     #left
     a_x = c_x - r
@@ -95,14 +103,14 @@ def cut_sector(c_x, c_y, r):
     A_x = 0
 
     if a_x < A_x:
-        s -= check_dir_l_r(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
+        s -= check_dir_left_right(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
 
     #right
     a_x = c_x + r
     A_x = 1
 
     if a_x > A_x:
-        s -= check_dir_l_r(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
+        s -= check_dir_left_right(down_line=down_line, up_line=up_line, x_line=A_x, r=r, c_x=c_x, c_y=c_y)
 
     return s
 

@@ -184,5 +184,6 @@ class TestF(unittest.TestCase):
             print(s_piece)
             self.assertAlmostEqual(s_piece, 2.299166025403653, places=9)
 
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,19 +1,12 @@
-# def get_digits(arr, result, delte):
-#     #needed sorted array
-#     #set
-#     new_delte = []
-#     for de in delte:
-#         for val in arr:
-#             new_val = de / val
-#             if new_val.is_integer():
-#                 if new_val not in new_delte:
-#                     new_delte.append(new_val)
-#     if len(new_delte) == 0:
-#         return result
-#     else:
-#         return get_digits(arr, result, new_delte)
+"""
+You have an array A length N of non-negative integers,
+you also have number M. You need to choose K elements from array A,
+that their production was equal to M
+"""
+
+
 def get_array(s):
-    arr= []
+    arr = []
     for val in s:
         arr.append(val)
     return arr
@@ -27,10 +20,6 @@ def get_digits(arr, result, m):
             if new_val < m:
                 new_s.append(new_val)
 
-    # if len(new_s) > 0:
-    #     result.extend(new_s)
-    #     return get_digits(new_s, result, m)
-    # else:
         return result
 
 
@@ -94,11 +83,6 @@ def isSubsetSum(set, n, mul, k, prim_arr):
                 if result:
                     return result
 
-    # for i in range(2, n + 2):
-    #     last = subset[i][len(subset[i]) - 1]
-    #     result = checkSolution2(set, last, mul, k)
-    #     if result:
-    #         return result
     return [0, 0, 0, 0]
 
 
@@ -144,14 +128,18 @@ def checkSolution2(set, arr, mul, k):
 
 m_n_k = input()
 m_n_k = m_n_k.split()
+
 n = int(m_n_k[0])
 m = int(m_n_k[1])
 k = int(m_n_k[2])
+
 arr = input()
 arr = arr.split()
+
 new_arr = []
 amount_of_ones = 0
 ones = []
+
 for idx, el in enumerate(arr):
     element = int(el)
     if element == 1:
@@ -200,9 +188,6 @@ elif n == k:
 elif n == 1:
     print(1, end=" ")
 else:
-    # prim_arr = [m]
-    # new_arr = delete_dubl(new_arr)
-    # new_arr = sorted(new_arr)
     result = []
     res_prim = get_digits(new_arr, result, m)
     res_prim.append(m)
@@ -213,4 +198,3 @@ else:
     res = isSubsetSum(new_arr, n, m, k, res_prim)
     for idx in res:
         print(idx + 1, end=" ")
-# Print()
