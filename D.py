@@ -1,3 +1,11 @@
+"""
+Alex has three lucky numbers: 5, 6, 10.
+Also Alex has number N which hasn't got zeros.
+He wants his favourite number to be divided at least on one of his favourite numbers.
+For that he K times swaps any two numbers of N
+"""
+
+
 from collections import Counter
 from math import factorial
 
@@ -127,12 +135,6 @@ elif div_5_probability == 0 and div_6_probability == 0:
     print(0)
 else:
     res = div_5_probability + div_6_probability
-    # q1 = 1 - div_5_probability
-    # q2 = 1 - div_6_probability
-    # res = 1 - q1 * q2
     if res > 1:
         res = 1
     print(res)
-    # if summ > 1:
-    #     summ = 1
-    # print(summ, end=" ")
